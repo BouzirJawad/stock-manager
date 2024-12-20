@@ -6,9 +6,7 @@ function stockManager(){
     let menuOption;
 do {
     inv.displayMenu();
-
-     menuOption = Number(prompt("Enter your choice :"));
-
+    menuOption = Number(prompt("Enter your choice :"));
     switch (menuOption) {
         case 1:
             inv.addProduct();
@@ -23,11 +21,14 @@ do {
             inv.deleteProduct();
             break;
         case 0:
-            console.log("goodbye...");
+            console.log("-------------------------------------------");
+            console.log("Quitting... (see you next time)");
+            console.log("-------------------------------------------");
             break;
         default:
             console.log("-------------------------------------------");
             console.log("invalid option! please select a valid option");
+            console.log("-------------------------------------------");
             break;
         }
     } while (menuOption);
