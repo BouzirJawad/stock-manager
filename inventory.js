@@ -1,13 +1,10 @@
 const fs = require('fs');
 const prompt = require("prompt-sync")();
 const prdct = require("./product");
-const filePath = 'C:\\Users\\jawad\\Desktop\\javasc\\stock manager\\inventory.json';
+const filePath = './stock manager/inventory.json';
 
 class inverntory {
-    
     products = [];
-    productCounter = 0;
-    
 
     constructor() {
         if(fs.existsSync(filePath)){
@@ -19,7 +16,7 @@ class inverntory {
         fs.writeFileSync(filePath, JSON.stringify(this.products, null, 4));
     }
     
-    displayMenu() {
+    displayMenu(){
         console.log("-----------------Main Menu-----------------");
         console.log("           1. Add a product.");
         console.log("           2. Display all products.");
@@ -56,9 +53,7 @@ class inverntory {
         }
         else{
             for (let i = 0; i < this.products.length; i++) 
-            {
-                this.displayProduct(i);
-            }
+            {this.displayProduct(i);}
         }
     }
     
@@ -66,23 +61,31 @@ class inverntory {
         let amount = Number(prompt("Enter how many products do you want to add :"), 10);
         console.log("-------------------------------------------");
     
-        for (let i = this.productCounter; i < amount+this.productCounter; i++) {
-            console.log(`   Product ${i + 1} :`);
-            
+        for (let i = 0; i < amount; i++) {
             let product = new prdct();
-    
+            
+            console.log(`   Product ${this.products.length + 1} :`);
             product.name = prompt("Name:");
             product.description = prompt("description:");
+
             product.quantity = parseInt(prompt("Quantity:"), 10);
+            while (isNaN(product.quantity)) {
+                console.log("Invalid quantity. Please enter a valid number.")
+                product.quantity = parseInt(prompt("Quantity:"), 10);
+            }
+
             product.price = parseFloat(prompt("Price:"));
-    
+            while (isNaN(product.price)) {
+                console.log("Invalid price. Please enter a valid number.")
+                product.quantity = parseFloat(prompt("Price:"));
+            }
+            
             this.products.push(product);
             this.saveProducts();
             console.log("-------------------------------------------");
             console.log("Product added successfully!");
             console.log("-------------------------------------------");
         }
-        this.productCounter = this.productCounter + amount;
     }
 
     modifyProduct(){
@@ -123,20 +126,24 @@ class inverntory {
                             case 0://skips the rest of the code and closes dowhile
                                 continue;
                             case 1:
-                                console.log("Current name :" + this.products[modifyChoice-1].name);
-                                this.products[modifyChoice-1].name = prompt("Enter the new name :");
+                                console.log("Current name (leave a blank to keep the current):" + this.products[modifyChoice-1].name);
+                                let newName = prompt("Enter the new name :");
+                                if (newName) {this.products[modifyChoice-1].name = newName;}
                                 break;
                             case 2:
                                 console.log("Current description :" + this.products[modifyChoice-1].description);
-                                this.products[modifyChoice-1].description = prompt("Enter the new description :");
+                                let newDescription = prompt("Enter the new name :");
+                                if (newDescription) {this.products[modifyChoice-1].description = newDescription;}
                                 break;
                             case 3:
                                 console.log("Current quantity :" + this.products[modifyChoice-1].quantity);
-                                this.products[modifyChoice-1].quantity = parseInt(prompt("Enter the new quantity :"), 10);
+                                let newQuantity = prompt("Enter the new name :");
+                                if (newQuantity) {this.products[modifyChoice-1].quantity = newQuantity;}
                                 break;
                             case 4:
                                 console.log("Current price :" + this.products[modifyChoice-1].price);
-                                this.products[modifyChoice-1].price = parseFloat(prompt("Enter the new price :"), 10);
+                                let newPrice = prompt("Enter the new name :");
+                                if (newPrice) {this.products[modifyChoice-1].price = newPrice;}
                                 break;
                             default:
                                 console.log("Invalid choice! Please select a valid option.");
@@ -178,7 +185,6 @@ class inverntory {
                     else{
                         this.products.splice(deleteChoice-1, 1)
                         this.saveProducts();
-                        this.productCounter --;
                         console.log("-------------------------------------------");
                         console.log(`Product ${deleteChoice} deleted successfully.`);
                         console.log("-------------------------------------------");
