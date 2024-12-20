@@ -21,14 +21,14 @@ do {
             inv.deleteProduct();
             break;
         case 0:
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
             console.log("Quitting... (see you next time)");
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
             break;
         default:
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
             console.log("invalid option! please select a valid option");
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
             break;
         }
     } while (menuOption);
