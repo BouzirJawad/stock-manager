@@ -23,7 +23,7 @@ class inverntory {
         console.log("           3. Modify a product.");
         console.log("           4. Delete a product.");
         console.log("           0. Quit");
-        console.log("-------------------------------------------");
+        console.log("-----------------------------------------------");
     }
 
     displayModifyMenu(){
@@ -36,7 +36,7 @@ class inverntory {
     }
 
     displayProduct(i){
-        console.log("-------------------------------------------");
+        console.log("-----------------------------------------------");
         console.log(`   Product ${i+1}`);
         console.log("Name :" + this.products[i].name);
         console.log("Descreption : " + this.products[i].description);i
@@ -47,9 +47,9 @@ class inverntory {
     displayAllProducts()
     {
         if (this.products.length === 0) {
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
             console.log("No products to display !");
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
         }
         else{
             for (let i = 0; i < this.products.length; i++) 
@@ -59,7 +59,7 @@ class inverntory {
     
     addProduct() {
         let amount = Number(prompt("Enter how many products do you want to add :"), 10);
-        console.log("-------------------------------------------");
+        console.log("-----------------------------------------------");
     
         for (let i = 0; i < amount; i++) {
             let product = new prdct();
@@ -70,21 +70,23 @@ class inverntory {
 
             product.quantity = parseInt(prompt("Quantity:"), 10);
             while (isNaN(product.quantity)) {
+                console.log("-----------------------------------------------");
                 console.log("Invalid quantity. Please enter a valid number.")
                 product.quantity = parseInt(prompt("Quantity:"), 10);
             }
 
             product.price = parseFloat(prompt("Price:"));
             while (isNaN(product.price)) {
+                console.log("-----------------------------------------------");
                 console.log("Invalid price. Please enter a valid number.")
-                product.quantity = parseFloat(prompt("Price:"));
+                product.price = parseFloat(prompt("Price:"));
             }
             
             this.products.push(product);
             this.saveProducts();
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
             console.log("Product added successfully!");
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
         }
     }
 
@@ -93,14 +95,14 @@ class inverntory {
         let modifyIndex; //to take index of what to modify in the product.
     
         if (this.products.length === 0) {
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
             console.log("No products to modify !");
-            console.log("-------------------------------------------");
+            console.log("-----------------------------------------------");
         }
         else{
             do {
                 this.displayAllProducts();
-                console.log("-------------------------------------------");
+                console.log("-----------------------------------------------");
                 console.log("Which product you want to modify:");
                 console.log("   0. To go back.")
                 modifyChoice = Number(prompt(" "));
@@ -110,17 +112,17 @@ class inverntory {
                 }
     
                 if (modifyChoice<0 || modifyChoice>this.products.length) {
-                    console.log("-------------------------------------------");
+                    console.log("-----------------------------------------------");
                     console.log("Invalid choice! Please select a valid option.");
-                    console.log("-------------------------------------------");
+                    console.log("-----------------------------------------------");
                 }
                 else{
                     do {
                         this.displayProduct(modifyChoice-1);
-                        console.log("-------------------------------------------");
+                        console.log("-----------------------------------------------");
                         this.displayModifyMenu();
                         modifyIndex = Number(prompt(" "));
-                        console.log("-------------------------------------------");
+                        console.log("-----------------------------------------------");
     
                         switch (modifyIndex) {
                             case 0://skips the rest of the code and closes dowhile
@@ -132,24 +134,38 @@ class inverntory {
                                 break;
                             case 2:
                                 console.log("Current description :" + this.products[modifyChoice-1].description);
-                                let newDescription = prompt("Enter the new name :");
+                                let newDescription = prompt("Enter the new description :");
                                 if (newDescription) {this.products[modifyChoice-1].description = newDescription;}
                                 break;
                             case 3:
                                 console.log("Current quantity :" + this.products[modifyChoice-1].quantity);
-                                let newQuantity = prompt("Enter the new name :");
-                                if (newQuantity) {this.products[modifyChoice-1].quantity = newQuantity;}
+                                let newQuantity = prompt("Enter the new quantity :");
+                                if (newQuantity) {
+                                    this.products[modifyChoice-1].quantity = newQuantity;
+                                    while (isNaN(this.products[modifyChoice-1].quantity)) {
+                                        console.log("-----------------------------------------------");
+                                        console.log("Invalid quantity. Please enter a valid number.");
+                                        this.products[modifyChoice-1].quantity = parseInt(prompt("Enter the new quantity :"), 10);
+                                    }
+                                }
                                 break;
                             case 4:
                                 console.log("Current price :" + this.products[modifyChoice-1].price);
-                                let newPrice = prompt("Enter the new name :");
-                                if (newPrice) {this.products[modifyChoice-1].price = newPrice;}
+                                let newPrice = prompt("Enter the new price :");
+                                if (newPrice) {
+                                    this.products[modifyChoice-1].price = newPrice;
+                                    while (isNaN(this.products[modifyChoice-1].price)) {
+                                        console.log("-----------------------------------------------");
+                                        console.log("Invalid quantity. Please enter a valid number.");
+                                        this.products[modifyChoice-1].price = parseFloat(prompt("Enter the new price :"));
+                                    }
+                                }
                                 break;
                             default:
                                 console.log("Invalid choice! Please select a valid option.");
                                 break;
                         }
-                        console.log("-------------------------------------------");
+                        console.log("-----------------------------------------------");
                     } while (modifyIndex);
                 }
                 this.saveProducts();
@@ -162,14 +178,14 @@ class inverntory {
         do {
             if (this.products.length === 0) {
                 deleteChoice = 0;
-                console.log("-------------------------------------------");
+                console.log("-----------------------------------------------");
                 console.log("No products to delete !");
-                console.log("-------------------------------------------");
+                console.log("-----------------------------------------------");
             }
             else{
                 while (this.products.length && deleteChoice != 0) {
                     this.displayAllProducts();
-                    console.log("-------------------------------------------");
+                    console.log("-----------------------------------------------");
                     console.log("Which product you want to delete:");
                     console.log("   0. To go back.")
                     deleteChoice = Number(prompt(" "));
@@ -178,16 +194,16 @@ class inverntory {
                         continue;
                     }
                     if (deleteChoice<0 || deleteChoice>this.products.length) {
-                        console.log("-------------------------------------------");
+                        console.log("-----------------------------------------------");
                         console.log("Invalid choice! Please select a valid option.");
-                        console.log("-------------------------------------------");
+                        console.log("-----------------------------------------------");
                     }
                     else{
                         this.products.splice(deleteChoice-1, 1)
                         this.saveProducts();
-                        console.log("-------------------------------------------");
+                        console.log("-----------------------------------------------");
                         console.log(`Product ${deleteChoice} deleted successfully.`);
-                        console.log("-------------------------------------------");
+                        console.log("-----------------------------------------------");
                     }
                 }
             }
